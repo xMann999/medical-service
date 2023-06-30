@@ -45,13 +45,13 @@ public class PatientService {
         return patientRepository.findAll().stream().map(patientMapper::toPatientDto).collect(Collectors.toList());
     }
 
-    public boolean deletePatient(String email) {
+    public PatientDTO deletePatient(String email) {
         Patient patient = getPatientByEmail(email);
         patientRepository.delete(patient);
-        return true;
+        return patientMapper.toPatientDto(patient);
     }
 
-    public boolean updatePatientDetails(String email, EditedPatient editedPatient) {
+    public EditedPatient updatePatientDetails(String email, EditedPatient editedPatient) {
         Patient patient = getPatientByEmail(email);
         if (editedPatient.doesContainsNull(editedPatient)) {
             throw new NotAllFieldsFilledException();
@@ -64,7 +64,7 @@ public class PatientService {
         patient.setPhoneNumber(editedPatient.getPhoneNumber());
         patient.setEmail(editedPatient.getEmail());
         patientRepository.save(patient);
-        return true;
+        return editedPatient;
     }
 
     public boolean updatePatientPassword(String email, String newPassword) {

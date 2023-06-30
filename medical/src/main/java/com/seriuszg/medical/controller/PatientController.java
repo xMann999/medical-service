@@ -37,16 +37,13 @@ public class PatientController {
     }
 
     @DeleteMapping("/{email}")
-    public ResponseEntity<String> deletePatient(@PathVariable String email) { // zwrocic usuniete dto
-        patientService.deletePatient(email);
-        return new ResponseEntity<>("Usunięto użytkownika", HttpStatus.OK);
+    public PatientDTO deletePatient(@PathVariable String email) { // zwrocic usuniete dto
+        return patientService.deletePatient(email);
     }
 
     @PatchMapping("/{email}/details")
-    public ResponseEntity<String> editPatientDetails(@PathVariable String email, @RequestBody EditedPatient editedPatient) {
-        patientService.updatePatientDetails(email, editedPatient);
-        return new ResponseEntity<>("Pomyślnie zmieniono dane pacjenta", HttpStatus.OK);
-
+    public EditedPatient editPatientDetails(@PathVariable String email, @RequestBody EditedPatient editedPatient) {
+        return patientService.updatePatientDetails(email, editedPatient);
     }
 
     @PatchMapping("/{email}/password")
