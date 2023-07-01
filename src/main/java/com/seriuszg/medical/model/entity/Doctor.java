@@ -9,8 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity
 @NoArgsConstructor
+@Entity
 @AllArgsConstructor
 public class Doctor {
 
@@ -22,5 +22,4 @@ public class Doctor {
     private String fistName;
     private String lastName;
     private String specialisation;
-
 }
