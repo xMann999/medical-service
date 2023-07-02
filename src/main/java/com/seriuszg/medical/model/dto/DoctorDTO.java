@@ -1,6 +1,5 @@
 package com.seriuszg.medical.model.dto;
 
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -8,7 +7,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class DoctorDTO {
 
-    @Id
     private Long id;
     private String email;
     private String fistName;
