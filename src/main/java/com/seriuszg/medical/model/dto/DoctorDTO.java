@@ -10,7 +10,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class DoctorDTO {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
