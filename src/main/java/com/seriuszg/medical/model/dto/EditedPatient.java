@@ -1,8 +1,10 @@
 package com.seriuszg.medical.model.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class EditedPatient {
 
     private String firstName;
