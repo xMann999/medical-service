@@ -6,9 +6,9 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
-public class PatientIllegalDataException extends PatientExceptions {
+public class IncorrectPatientEmailException extends PatientExceptions {
 
-    public PatientIllegalDataException() {
+    public IncorrectPatientEmailException() {
         super("Wpisz poprawny adres e-mail", HttpStatus.BAD_REQUEST);
     }
 }

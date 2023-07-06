@@ -2,7 +2,7 @@ package com.seriuszg.medical.service;
 
 import com.seriuszg.medical.exceptions.EmailAlreadyTakenException;
 import com.seriuszg.medical.exceptions.NotAllFieldsFilledException;
-import com.seriuszg.medical.exceptions.PatientIllegalDataException;
+import com.seriuszg.medical.exceptions.IncorrectPatientEmailException;
 import com.seriuszg.medical.exceptions.PatientNotFoundException;
 import com.seriuszg.medical.mapper.PatientMapper;
 import com.seriuszg.medical.model.dto.EditedPatient;
@@ -46,11 +46,12 @@ public class PatientServiceTest {
         var result = patientService.getPatient(email);
 
         Assertions.assertEquals(patientDTO, result);
+        Assertions.assertEquals("test@gmail.com", result.getEmail());
     }
 
     @Test
     void getPatient_PatientNotFound_ExceptionThrown() {
-        var exception = Assertions.assertThrows(PatientNotFoundException.class, () -> patientService.getPatient(any()));
+        var exception = Assertions.assertThrows(PatientNotFoundException.class, () -> patientService.getPatient(null));
 
         Assertions.assertEquals("Nie znaleziono pacjenta zarejestrowanego na ten adres e-mail", exception.getMessage());
         Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
@@ -69,13 +70,14 @@ public class PatientServiceTest {
         var result = patientService.savePatient(patientDTO);
 
         Assertions.assertEquals(patientDTO, result);
+        Assertions.assertEquals("dd@gmail.com", result.getEmail());
     }
 
     @Test
     void savePatient_IncorrectData_ExceptionThrown() {
         PatientDTO patientDTO = createPatientDTO(null);
 
-        var exception = Assertions.assertThrows(PatientIllegalDataException.class, () -> patientService.savePatient(patientDTO));
+        var exception = Assertions.assertThrows(IncorrectPatientEmailException.class, () -> patientService.savePatient(patientDTO));
 
         Assertions.assertEquals("Wpisz poprawny adres e-mail", exception.getMessage());
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
@@ -111,6 +113,7 @@ public class PatientServiceTest {
         Assertions.assertEquals(patientsDTO, result);
         Assertions.assertEquals("1", result.get(0).getEmail());
         Assertions.assertEquals("2", result.get(1).getEmail());
+        Assertions.assertEquals(2, result.size());
     }
 
     @Test
@@ -128,7 +131,7 @@ public class PatientServiceTest {
 
     @Test
     void deletePatient_PatientNotFound_ExceptionThrown() {
-        var exception = Assertions.assertThrows(PatientNotFoundException.class, () -> patientService.deletePatient(any()));
+        var exception = Assertions.assertThrows(PatientNotFoundException.class, () -> patientService.deletePatient(null));
 
         Assertions.assertEquals("Nie znaleziono pacjenta zarejestrowanego na ten adres e-mail", exception.getMessage());
         Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
@@ -136,13 +139,13 @@ public class PatientServiceTest {
 
     @Test
     void updatePatientDetails_PatientFound_PatientDetailsChanged() {
-        Patient patient1 = createPatient("ewee", 1L);
+        Patient patient = createPatient("ewee", 1L);
         EditedPatient editedPatient = new EditedPatient(
                 "changedf",
                 "changedl",
                 "997",
                 "sfdd");
-        when(patientRepository.findByEmail(eq("ewee"))).thenReturn(Optional.of(patient1));
+        when(patientRepository.findByEmail(eq("ewee"))).thenReturn(Optional.of(patient));
 
         var result = patientService.updatePatientDetails("ewee", editedPatient);
 
@@ -194,7 +197,6 @@ public class PatientServiceTest {
         Assertions.assertEquals("Nie znaleziono pacjenta zarejestrowanego na ten adres e-mail", exception.getMessage());
         Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
     }
-
 
     Patient createPatient(String email, Long id) {
         return new Patient(id,

@@ -2,7 +2,7 @@ package com.seriuszg.medical.service;
 
 import com.seriuszg.medical.exceptions.EmailAlreadyTakenException;
 import com.seriuszg.medical.exceptions.NotAllFieldsFilledException;
-import com.seriuszg.medical.exceptions.PatientIllegalDataException;
+import com.seriuszg.medical.exceptions.IncorrectPatientEmailException;
 import com.seriuszg.medical.exceptions.PatientNotFoundException;
 import com.seriuszg.medical.mapper.PatientMapper;
 import com.seriuszg.medical.model.dto.PatientDTO;
@@ -32,7 +32,7 @@ public class PatientService {
 
     public PatientDTO savePatient(PatientDTO patientDTO) {
         if (patientDTO.getEmail() == null) {
-            throw new PatientIllegalDataException();
+            throw new IncorrectPatientEmailException();
         }
         if (patientRepository.findByEmail(patientDTO.getEmail()).isPresent()) {
             throw new EmailAlreadyTakenException();
