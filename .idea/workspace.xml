@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="24b96ad8-17fd-437d-a3cf-82fa78a3a148" name="Changes" comment="added failure tests">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/seriuszg/medical/exceptions/PatientIllegalDataException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/seriuszg/medical/exceptions/IncorrectPatientEmailException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/seriuszg/medical/service/PatientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/seriuszg/medical/service/PatientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/seriuszg/medical/service/PatientServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/seriuszg/medical/service/PatientServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/seriuszg/medical/service/PatientServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/seriuszg/medical/service/PatientServiceTest.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feature/med-99" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2RyZNb7GuNu2C6j3wvqW9AJyvcP" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/sergo/Desktop/dfgsdfgd/medical-service3&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.seriuszg.medical.service" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.PatientServiceTest.getPatient_PatientNotFound_ExceptionThrown">
+    <configuration name="PatientServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="medical" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.seriuszg.medical.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.seriuszg.medical.service" />
+      <option name="MAIN_CLASS_NAME" value="com.seriuszg.medical.service.PatientServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PatientServiceTest.deletePatient_PatientNotFound_ExceptionThrown" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="medical" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.seriuszg.medical.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.seriuszg.medical.service" />
+      <option name="MAIN_CLASS_NAME" value="com.seriuszg.medical.service.PatientServiceTest" />
+      <option name="METHOD_NAME" value="deletePatient_PatientNotFound_ExceptionThrown" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PatientServiceTest.getAllPatients_PatientsFound_PatientsReturned" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="medical" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.seriuszg.medical.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.seriuszg.medical.service" />
+      <option name="MAIN_CLASS_NAME" value="com.seriuszg.medical.service.PatientServiceTest" />
+      <option name="METHOD_NAME" value="getAllPatients_PatientsFound_PatientsReturned" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PatientServiceTest.getPatient_PatientNotFound_ExceptionThrown" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="medical" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.seriuszg.medical.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.seriuszg.medical.service" />
+      <option name="MAIN_CLASS_NAME" value="com.seriuszg.medical.service.PatientServiceTest" />
+      <option name="METHOD_NAME" value="getPatient_PatientNotFound_ExceptionThrown" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PatientServiceTest.savePatient_PatientCreated_PatientDTOReturned" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="medical" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.seriuszg.medical.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.seriuszg.medical.service" />
+      <option name="MAIN_CLASS_NAME" value="com.seriuszg.medical.service.PatientServiceTest" />
+      <option name="METHOD_NAME" value="savePatient_PatientCreated_PatientDTOReturned" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.PatientServiceTest.getPatient_PatientNotFound_ExceptionThrown" />
+        <item itemvalue="JUnit.PatientServiceTest.savePatient_PatientCreated_PatientDTOReturned" />
+        <item itemvalue="JUnit.PatientServiceTest.getAllPatients_PatientsFound_PatientsReturned" />
+        <item itemvalue="JUnit.PatientServiceTest.deletePatient_PatientNotFound_ExceptionThrown" />
+        <item itemvalue="JUnit.PatientServiceTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="24b96ad8-17fd-437d-a3cf-82fa78a3a148" name="Changes" comment="" />
+      <created>1688224242515</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1688224242515</updated>
+    </task>
+    <task id="LOCAL-00001" summary="added doctor class">
+      <created>1688225378056</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1688225378056</updated>
+    </task>
+    <task id="LOCAL-00002" summary="added doctor class">
+      <created>1688225741346</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1688225741346</updated>
+    </task>
+    <task id="LOCAL-00003" summary="added doctor class and doctor dto">
+      <created>1688226303246</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1688226303246</updated>
+    </task>
+    <task id="LOCAL-00004" summary="added doctor class and doctor dto">
+      <created>1688310212903</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1688310212903</updated>
+    </task>
+    <task id="LOCAL-00005" summary="added doctor class and doctor dto">
+      <created>1688310253266</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1688310253266</updated>
+    </task>
+    <task id="LOCAL-00006" summary="added doctor class and doctor dto">
+      <created>1688310759904</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1688310759904</updated>
+    </task>
+    <task id="LOCAL-00007" summary="added doctor class and doctor dto">
+      <created>1688311335193</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1688311335193</updated>
+    </task>
+    <task id="LOCAL-00008" summary="added doctor class and doctor dto">
+      <created>1688311496513</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1688311496513</updated>
+    </task>
+    <task id="LOCAL-00009" summary="added tests">
+      <created>1688403424683</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1688403424683</updated>
+    </task>
+    <task id="LOCAL-00010" summary="added tests">
+      <created>1688483095352</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1688483095352</updated>
+    </task>
+    <task id="LOCAL-00011" summary="added tests">
+      <created>1688483154328</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1688483154328</updated>
+    </task>
+    <task id="LOCAL-00012" summary="added tests">
+      <created>1688485653303</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1688485653303</updated>
+    </task>
+    <task id="LOCAL-00013" summary="added failure tests">
+      <created>1688489049900</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1688489049900</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="added doctor class" />
+    <MESSAGE value="added doctor class and doctor dto" />
+    <MESSAGE value="added tests" />
+    <MESSAGE value="added failure tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="added failure tests" />
+  </component>
+</project>
