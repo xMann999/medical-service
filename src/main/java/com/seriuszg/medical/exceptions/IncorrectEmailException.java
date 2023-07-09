@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
-public class IncorrectEmailException extends PatientExceptions {
+public class IncorrectEmailException extends GeneralExceptions {
 
     public IncorrectEmailException() {
         super("Wpisz poprawny adres e-mail", HttpStatus.NOT_FOUND);

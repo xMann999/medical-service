@@ -6,8 +6,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
-public class NotAllFieldsFilledException extends PatientExceptions {
-
+public class NotAllFieldsFilledException extends GeneralExceptions {
 
     public NotAllFieldsFilledException () {
         super("Wypełnij wszystkie pola", HttpStatus.BAD_REQUEST);

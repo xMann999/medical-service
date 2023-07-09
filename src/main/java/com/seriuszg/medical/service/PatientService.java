@@ -1,12 +1,12 @@
 package com.seriuszg.medical.service;
 
 import com.seriuszg.medical.exceptions.EmailAlreadyTakenException;
-import com.seriuszg.medical.exceptions.NotAllFieldsFilledException;
 import com.seriuszg.medical.exceptions.IncorrectEmailException;
+import com.seriuszg.medical.exceptions.NotAllFieldsFilledException;
 import com.seriuszg.medical.exceptions.PatientNotFoundException;
 import com.seriuszg.medical.mapper.PatientMapper;
-import com.seriuszg.medical.model.dto.PatientDTO;
-import com.seriuszg.medical.model.dto.EditedPatient;
+import com.seriuszg.medical.model.dto.EditedPatientDto;
+import com.seriuszg.medical.model.dto.PatientDto;
 import com.seriuszg.medical.model.entity.Patient;
 import com.seriuszg.medical.repositories.PatientRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,45 +26,45 @@ public class PatientService {
         return patientRepository.findByEmail(email).orElseThrow(PatientNotFoundException::new);
     }
 
-    public PatientDTO getPatient(String email) {
-        return patientMapper.toPatientDto(getPatientByEmail(email));
+    public PatientDto getPatient(String email) {
+        return patientMapper.toDto(getPatientByEmail(email));
     }
 
-    public PatientDTO savePatient(PatientDTO patientDTO) {
+    public PatientDto savePatient(PatientDto patientDTO) {
         if (patientDTO.getEmail() == null) {
             throw new IncorrectEmailException();
         }
         if (patientRepository.findByEmail(patientDTO.getEmail()).isPresent()) {
             throw new EmailAlreadyTakenException();
         }
-        Patient patient = patientRepository.save(patientMapper.toPatient(patientDTO));
-        return patientMapper.toPatientDto(patient);
+        Patient patient = patientRepository.save(patientMapper.toEntity(patientDTO));
+        return patientMapper.toDto(patient);
     }
 
-    public List<PatientDTO> getAllPatients() {
-        return patientRepository.findAll().stream().map(patientMapper::toPatientDto).collect(Collectors.toList());
+    public List<PatientDto> getAllPatients() {
+        return patientRepository.findAll().stream().map(patientMapper::toDto).collect(Collectors.toList());
     }
 
-    public PatientDTO deletePatient(String email) {
+    public PatientDto deletePatient(String email) {
         Patient patient = getPatientByEmail(email);
         patientRepository.delete(patient);
-        return patientMapper.toPatientDto(patient);
+        return patientMapper.toDto(patient);
     }
 
-    public EditedPatient updatePatientDetails(String email, EditedPatient editedPatient) {
+    public EditedPatientDto updatePatientDetails(String email, EditedPatientDto editedPatientDto) {
         Patient patient = getPatientByEmail(email);
-        if (editedPatient.doesContainsNull(editedPatient)) {
+        if (editedPatientDto.doesContainsNull(editedPatientDto)) {
             throw new NotAllFieldsFilledException();
         }
-        if (patientRepository.findByEmail(editedPatient.getEmail()).isPresent()) {
+        if (patientRepository.findByEmail(editedPatientDto.getEmail()).isPresent()) {
             throw new EmailAlreadyTakenException();
         }
-        patient.setFirstName(editedPatient.getFirstName());
-        patient.setLastName(editedPatient.getLastName());
-        patient.setPhoneNumber(editedPatient.getPhoneNumber());
-        patient.setEmail(editedPatient.getEmail());
+        patient.setFirstName(editedPatientDto.getFirstName());
+        patient.setLastName(editedPatientDto.getLastName());
+        patient.setPhoneNumber(editedPatientDto.getPhoneNumber());
+        patient.setEmail(editedPatientDto.getEmail());
         patientRepository.save(patient);
-        return editedPatient;
+        return editedPatientDto;
     }
 
     public boolean updatePatientPassword(String email, String newPassword) {
