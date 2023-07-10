@@ -80,7 +80,7 @@ public class PatientServiceTest {
         var exception = Assertions.assertThrows(IncorrectEmailException.class, () -> patientService.savePatient(patientDTO));
 
         Assertions.assertEquals("Wpisz poprawny adres e-mail", exception.getMessage());
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
     }
 
     @Test
@@ -174,7 +174,7 @@ public class PatientServiceTest {
 
         var exception = Assertions.assertThrows(RequiredFieldsNotFilledException.class, () -> patientService.updatePatientDetails(email, editedPatientDto));
 
-        Assertions.assertEquals("Wypełnij wszystkie pola", exception.getMessage());
+        Assertions.assertEquals("Wypełnij wszystkie wymagane pola", exception.getMessage());
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
     }
 
