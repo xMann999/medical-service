@@ -2,9 +2,9 @@ package com.seriuszg.medical.exceptions;
 
 import org.springframework.http.HttpStatus;
 
-public class IncorrectDateException extends GeneralExceptions {
+public class IncorrectDateException extends GeneralException {
 
-    public IncorrectDateException() {
-        super("Podana data jest datą w przeszłości", HttpStatus.BAD_REQUEST);
+    public IncorrectDateException(String message) {
+        super(message, HttpStatus.BAD_REQUEST);
     }
 }

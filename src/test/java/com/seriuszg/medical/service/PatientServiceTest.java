@@ -2,7 +2,7 @@ package com.seriuszg.medical.service;
 
 import com.seriuszg.medical.exceptions.EmailAlreadyTakenException;
 import com.seriuszg.medical.exceptions.IncorrectEmailException;
-import com.seriuszg.medical.exceptions.NotAllFieldsFilledException;
+import com.seriuszg.medical.exceptions.RequiredFieldsNotFilledException;
 import com.seriuszg.medical.exceptions.PatientNotFoundException;
 import com.seriuszg.medical.mapper.PatientMapper;
 import com.seriuszg.medical.model.dto.EditedPatientDto;
@@ -172,7 +172,7 @@ public class PatientServiceTest {
         EditedPatientDto editedPatientDto = new EditedPatientDto(null, "ddd", "123", "dd");
         when(patientRepository.findByEmail(eq(email))).thenReturn(Optional.of(patient));
 
-        var exception = Assertions.assertThrows(NotAllFieldsFilledException.class, () -> patientService.updatePatientDetails(email, editedPatientDto));
+        var exception = Assertions.assertThrows(RequiredFieldsNotFilledException.class, () -> patientService.updatePatientDetails(email, editedPatientDto));
 
         Assertions.assertEquals("Wypełnij wszystkie pola", exception.getMessage());
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());

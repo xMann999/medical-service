@@ -12,11 +12,11 @@ public class EditedPatientDto {
     private String phoneNumber;
     private String email;
 
-    public boolean doesContainsNull(EditedPatientDto editedPatientDto) {
-        if (editedPatientDto.getFirstName() == null
-        || editedPatientDto.getLastName() == null
-        || editedPatientDto.getPhoneNumber() == null
-        || editedPatientDto.getEmail() == null) {
+    public boolean doesContainsNull() {
+        if (this.getFirstName() == null
+        || this.getLastName() == null
+        || this.getPhoneNumber() == null
+        || this.getEmail() == null) {
             return true;
         }
         return false;

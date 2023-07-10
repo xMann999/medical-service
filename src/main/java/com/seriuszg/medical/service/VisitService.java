@@ -1,8 +1,5 @@
 package com.seriuszg.medical.service;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seriuszg.medical.exceptions.*;
 import com.seriuszg.medical.mapper.VisitMapper;
 import com.seriuszg.medical.model.dto.VisitRequest;
@@ -11,10 +8,7 @@ import com.seriuszg.medical.model.entity.Patient;
 import com.seriuszg.medical.model.entity.Visit;
 import com.seriuszg.medical.repositories.PatientRepository;
 import com.seriuszg.medical.repositories.VisitRepository;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.Mapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -28,44 +22,41 @@ public class VisitService {
     private final VisitMapper visitMapper;
     private final PatientRepository patientRepository;
 
-    private Visit getVisit(Long id) {
-        return visitRepository.findById(id).orElseThrow(VisitNotFoundException::new);
-    }
-
     public VisitResponse requestVisit(VisitRequest visitRequest) {
         Visit visit = visitMapper.requestToEntity(visitRequest);
         if (visit.getVisitStartTime().isBefore(LocalDateTime.now())) {
-            throw new IncorrectDateException();
+            throw new IncorrectDateException("Podana data jest datą w przeszłości");
         }
-        if (!visitRepository.isDateAvailable(visit.getVisitStartTime(), visit.getVisitEndTime())) {
-            throw new DateIsUnavailableException();
+        if (visitRepository.findAllOverlapping(visit.getVisitStartTime(), visit.getVisitEndTime()).size() > 0) {
+            throw new IncorrectDateException("Istnieje już zapisana wizyta w tym terminie");
         }
         if (visit.getVisitStartTime().getSecond() != 0) {
-            throw new IncorrectVisitTimeException();
+            throw new IncorrectDateException("Wizyty można ustawiać tylko co pełny kwadrans godziny");
         }
         switch (visit.getVisitStartTime().getMinute()) {
             case 0, 15, 30, 45:
                 break;
             default:
-                throw new IncorrectVisitTimeException();
+                throw new IncorrectDateException("Wizyty można ustawiać tylko co pełny kwadrans godziny");
         }
-        switch (visit.getDuration()) {
-            case 15, 30, 45, 60:
-                break;
-            default:
-                throw new IncorrectVisitDutationException();
+        if (visit.getDuration().toMinutes() % 15 != 0 || visit.getDuration().toMinutes() == 0) {
+            throw new IncorrectVisitDutationException();
         }
         return visitMapper.entityToResponse(visitRepository.save(visit));
     }
 
-    public VisitResponse assignPatient(Long id, String email) {
-        Visit visit = getVisit(id);
-        visit.setPatient(patientRepository.findByEmail(email).orElseThrow(PatientNotFoundException::new));
-        visit.setPatientsEmail(patientRepository.findByEmail(email).get().getEmail());
+    public VisitResponse assignPatient(Long visitId, Long patientId) {
+        Visit visit = getVisit(visitId);
+        Patient patient = patientRepository.findById(patientId).orElseThrow(PatientNotFoundException::new);
+        visit.setPatient(patient);
         return visitMapper.entityToResponse(visitRepository.save(visit));
     }
 
     public List<VisitResponse> getAllAssignedVisits(String email) {
-        return visitRepository.findByPatientsEmail(email).stream().map(visit -> visitMapper.entityToResponse(visit)).toList();
+        return visitRepository.findByPatientEmail(email).stream().map(visit -> visitMapper.entityToResponse(visit)).toList();
+    }
+
+    private Visit getVisit(Long id) {
+        return visitRepository.findById(id).orElseThrow(VisitNotFoundException::new);
     }
 }

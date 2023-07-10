@@ -1,5 +1,6 @@
 package com.seriuszg.medical.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.*;
@@ -24,6 +25,7 @@ public class Patient {
     private String lastName;
     private String phoneNumber;
     private LocalDate birthday;
+    @JsonIgnore
     @OneToMany(mappedBy = "patient")
     private Set<Visit> visits;
 }

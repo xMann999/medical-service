@@ -2,26 +2,32 @@ package com.seriuszg.medical.mapper;
 
 import com.seriuszg.medical.model.dto.VisitRequest;
 import com.seriuszg.medical.model.dto.VisitResponse;
+import com.seriuszg.medical.model.entity.Patient;
 import com.seriuszg.medical.model.entity.Visit;
-import org.springframework.stereotype.Service;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
+import org.mapstruct.ReportingPolicy;
 
-@Service
-public class VisitMapper {
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, unmappedSourcePolicy = ReportingPolicy.IGNORE, componentModel = "spring")
+public interface VisitMapper {
 
-    public Visit requestToEntity(VisitRequest visitRequest) {
+    @Mapping(source = "patient", target = "patientId", qualifiedByName = "mapToPatientId")
+    VisitResponse entityToResponse(Visit visit);
+
+    default Visit requestToEntity(VisitRequest visitRequest) {
         return Visit.builder()
                 .visitStartTime(visitRequest.getVisitStartTime())
-                .visitEndTime(visitRequest.getVisitStartTime().plusMinutes(visitRequest.getDuration()))
+                .visitEndTime(visitRequest.getVisitStartTime().plusMinutes(visitRequest.getDuration().toMinutes()))
                 .duration(visitRequest.getDuration())
                 .build();
     }
 
-    public VisitResponse entityToResponse(Visit visit) {
-        return VisitResponse.builder()
-                .id(visit.getId())
-                .visitStartTime(visit.getVisitStartTime())
-                .visitEndTime(visit.getVisitEndTime())
-                .patient(visit.getPatient())
-                .build();
+    @Named("mapToPatientId")
+    default Long mapToPatientId(Patient patient) {
+        if (patient == null) {
+            return null;
+        }
+        return patient.getId();
     }
 }

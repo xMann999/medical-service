@@ -2,7 +2,7 @@ package com.seriuszg.medical.service;
 
 import com.seriuszg.medical.exceptions.EmailAlreadyTakenException;
 import com.seriuszg.medical.exceptions.IncorrectEmailException;
-import com.seriuszg.medical.exceptions.NotAllFieldsFilledException;
+import com.seriuszg.medical.exceptions.RequiredFieldsNotFilledException;
 import com.seriuszg.medical.exceptions.PatientNotFoundException;
 import com.seriuszg.medical.mapper.PatientMapper;
 import com.seriuszg.medical.model.dto.EditedPatientDto;
@@ -42,7 +42,9 @@ public class PatientService {
     }
 
     public List<PatientDto> getAllPatients() {
-        return patientRepository.findAll().stream().map(patientMapper::toDto).collect(Collectors.toList());
+        return patientRepository.findAll().stream()
+                .map(patientMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     public PatientDto deletePatient(String email) {
@@ -53,8 +55,8 @@ public class PatientService {
 
     public EditedPatientDto updatePatientDetails(String email, EditedPatientDto editedPatientDto) {
         Patient patient = getPatientByEmail(email);
-        if (editedPatientDto.doesContainsNull(editedPatientDto)) {
-            throw new NotAllFieldsFilledException();
+        if (editedPatientDto.doesContainsNull()) {
+            throw new RequiredFieldsNotFilledException();
         }
         if (patientRepository.findByEmail(editedPatientDto.getEmail()).isPresent()) {
             throw new EmailAlreadyTakenException();

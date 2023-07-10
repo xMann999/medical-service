@@ -2,6 +2,7 @@ package com.seriuszg.medical.repositories;
 
 import com.seriuszg.medical.model.entity.Visit;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -13,13 +14,11 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
 
     Optional<Visit> findById(Long id);
 
-    List<Visit> findByPatientsEmail(String patientsEmail);
+    List<Visit> findByPatientEmail(String patientEmail);
 
-    default boolean isDateAvailable(LocalDateTime start, LocalDateTime end) {
-        List<Visit> nonOverlappingDates = findAll().stream().filter(visit -> start.compareTo(visit.getVisitEndTime()) >= 0 || end.compareTo(visit.getVisitStartTime()) <= 0).toList();
-        if (nonOverlappingDates.size() == findAll().size()) {
-            return true;
-        }
-        return false;
-    }
+    @Query("select v " +
+            "from Visit v " +
+            "where v.visitStartTime  < :visitEndTime " +
+            "and visitEndTime > :visitStartTime")
+    List<Visit> findAllOverlapping(LocalDateTime visitStartTime, LocalDateTime visitEndTime);
 }

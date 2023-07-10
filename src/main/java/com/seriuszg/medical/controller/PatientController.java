@@ -2,7 +2,9 @@ package com.seriuszg.medical.controller;
 
 import com.seriuszg.medical.model.dto.EditedPatientDto;
 import com.seriuszg.medical.model.dto.PatientDto;
+import com.seriuszg.medical.model.dto.VisitResponse;
 import com.seriuszg.medical.service.PatientService;
+import com.seriuszg.medical.service.VisitService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import java.util.List;
 public class PatientController {
 
     private final PatientService patientService;
+    private final VisitService visitService;
 
     @PostMapping
     public PatientDto createPatient(@RequestBody PatientDto patientDTO) {
@@ -24,13 +27,13 @@ public class PatientController {
     }
 
     @GetMapping("/{email}")
-    public ResponseEntity<PatientDto> getPatient(@PathVariable String email) {
-        return new ResponseEntity<>(patientService.getPatient(email), HttpStatus.OK);
+    public PatientDto getPatient(@PathVariable String email) {
+        return patientService.getPatient(email);
     }
 
     @GetMapping
-    public ResponseEntity<List<PatientDto>> showAllPatients() {
-        return new ResponseEntity<>(patientService.getAllPatients(), HttpStatus.OK);
+    public List<PatientDto> showAllPatients() {
+        return patientService.getAllPatients();
     }
 
     @DeleteMapping("/{email}")
@@ -47,5 +50,10 @@ public class PatientController {
     public ResponseEntity<String> editPatientPassword(@PathVariable String email, @RequestBody String newPassword) {
         patientService.updatePatientPassword(email, newPassword);
         return new ResponseEntity<>("Pomyślnie zmieniono hasło", HttpStatus.OK);
+    }
+
+    @GetMapping("/{email}/visits")
+    public List<VisitResponse> getAllAssignedVisitsToSpecificPatient(@PathVariable String email) {
+        return visitService.getAllAssignedVisits(email);
     }
 }

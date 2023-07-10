@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
-public class EmailAlreadyTakenException extends GeneralExceptions {
+public class EmailAlreadyTakenException extends GeneralException {
 
     public EmailAlreadyTakenException() {
         super("Ten adres e-mail jest już zajęty", HttpStatus.BAD_REQUEST);

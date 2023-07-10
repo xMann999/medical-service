@@ -24,10 +24,9 @@ public class Visit {
     @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;
-    private String patientsEmail;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime visitStartTime;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime visitEndTime;
-    private int duration;
+    private Duration duration;
 }
