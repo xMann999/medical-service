@@ -37,7 +37,7 @@ public class PatientController {
     }
 
     @DeleteMapping("/{email}")
-    public PatientDto deletePatient(@PathVariable String email) { // zwrocic usuniete dto
+    public PatientDto deletePatient(@PathVariable String email) {
         return patientService.deletePatient(email);
     }
 

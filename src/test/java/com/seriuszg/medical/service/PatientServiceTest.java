@@ -37,7 +37,7 @@ public class PatientServiceTest {
 
     @Test
     void getPatient_PatientFound_PatientReturned() {
-        String email = "test@gmail.com";
+        String email = "sg@gmail.com";
         PatientDto patientDTO = createPatientDTO(email, 1L);
         Patient patient = createPatient(email, 1L);
         when(patientRepository.findByEmail(eq(email))).thenReturn(Optional.of(patient));
@@ -46,7 +46,7 @@ public class PatientServiceTest {
         var result = patientService.getPatient(email);
 
         Assertions.assertEquals(patientDTO, result);
-        Assertions.assertEquals("test@gmail.com", result.getEmail());
+        Assertions.assertEquals("sg@gmail.com", result.getEmail());
     }
 
     @Test
