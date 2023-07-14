@@ -5,10 +5,8 @@ import com.seriuszg.medical.model.dto.VisitRequest;
 import com.seriuszg.medical.repositories.PatientRepository;
 import com.seriuszg.medical.repositories.VisitRepository;
 import jakarta.transaction.Transactional;
-import org.h2.api.Interval;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.convert.DurationFormat;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -20,7 +18,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-import static org.h2.api.IntervalQualifier.MINUTE;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @SpringBootTest
@@ -40,7 +37,7 @@ public class VisitControllerTest {
     @Test
     @Rollback
     void createVisit_DataCorrect_VisitCreated() throws Exception {
-        VisitRequest visitRequest = new VisitRequest(LocalDateTime.of(2024,3,10,15,0,0), Duration.parse("PT30M"));
+        VisitRequest visitRequest = new VisitRequest(LocalDateTime.of(2024,3,10,15,00,0), Duration.parse("PT30M"));
         mockMvc.perform(MockMvcRequestBuilders.post("/visits")
                 .content(objectMapper.writeValueAsString(visitRequest))
                 .contentType(MediaType.APPLICATION_JSON))

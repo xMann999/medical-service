@@ -101,7 +101,7 @@ public class VisitServiceTest {
 
         Assertions.assertEquals(2024, result.getVisitStartTime().getYear());
         Assertions.assertEquals(15, result.getVisitStartTime().getHour());
-        Assertions.assertEquals(null, result.getPatientId());
+        Assertions.assertNull(result.getPatientId());
     }
 
     @Test
