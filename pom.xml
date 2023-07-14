@@ -54,8 +54,6 @@
 			<version>${mapstruct.version}</version>
 		</dependency>
 
-
-
 	</dependencies>
 
 	<build>

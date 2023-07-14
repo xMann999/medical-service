@@ -1,17 +1,18 @@
 package com.seriuszg.medical.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.*;
+import java.util.*;
 
 import java.time.LocalDate;
 
 @Data
+@Builder
 @AllArgsConstructor
 @Entity
 @NoArgsConstructor
+@Table(name = "patient")
 public class Patient {
 
     @Id
@@ -24,5 +25,7 @@ public class Patient {
     private String lastName;
     private String phoneNumber;
     private LocalDate birthday;
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "patient")
+    private Set<Visit> visits;
 }

@@ -1,17 +1,16 @@
 package com.seriuszg.medical.controller;
 
-import com.seriuszg.medical.model.dto.PatientDTO;
-import com.seriuszg.medical.model.dto.EditedPatient;
+import com.seriuszg.medical.model.dto.EditedPatientDto;
+import com.seriuszg.medical.model.dto.PatientDto;
+import com.seriuszg.medical.model.dto.VisitResponse;
 import com.seriuszg.medical.service.PatientService;
-import lombok.AllArgsConstructor;
+import com.seriuszg.medical.service.VisitService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.util.*;
-
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/patients")
@@ -19,31 +18,32 @@ import org.springframework.web.bind.annotation.*;
 public class PatientController {
 
     private final PatientService patientService;
+    private final VisitService visitService;
 
     @PostMapping
-    public PatientDTO createPatient(@RequestBody PatientDTO patientDTO) {
+    public PatientDto createPatient(@RequestBody PatientDto patientDTO) {
         return patientService.savePatient(patientDTO);
 
     }
 
     @GetMapping("/{email}")
-    public ResponseEntity<PatientDTO> getPatient(@PathVariable String email) {
-        return new ResponseEntity<>(patientService.getPatient(email), HttpStatus.OK);
+    public PatientDto getPatient(@PathVariable String email) {
+        return patientService.getPatient(email);
     }
 
     @GetMapping
-    public ResponseEntity<List<PatientDTO>> showAllPatients() {
-        return new ResponseEntity<>(patientService.getAllPatients(), HttpStatus.OK);
+    public List<PatientDto> showAllPatients() {
+        return patientService.getAllPatients();
     }
 
     @DeleteMapping("/{email}")
-    public PatientDTO deletePatient(@PathVariable String email) { // zwrocic usuniete dto
+    public PatientDto deletePatient(@PathVariable String email) {
         return patientService.deletePatient(email);
     }
 
     @PatchMapping("/{email}/details")
-    public EditedPatient editPatientDetails(@PathVariable String email, @RequestBody EditedPatient editedPatient) {
-        return patientService.updatePatientDetails(email, editedPatient);
+    public EditedPatientDto editPatientDetails(@PathVariable String email, @RequestBody EditedPatientDto editedPatientDto) {
+        return patientService.updatePatientDetails(email, editedPatientDto);
     }
 
     @PatchMapping("/{email}/password")
@@ -52,4 +52,8 @@ public class PatientController {
         return new ResponseEntity<>("Pomyślnie zmieniono hasło", HttpStatus.OK);
     }
 
+    @GetMapping("/{email}/visits")
+    public List<VisitResponse> getAllAssignedVisitsToSpecificPatient(@PathVariable String email) {
+        return visitService.getAllAssignedVisits(email);
+    }
 }
