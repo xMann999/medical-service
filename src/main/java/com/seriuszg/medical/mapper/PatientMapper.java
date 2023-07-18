@@ -4,9 +4,11 @@ import com.seriuszg.medical.model.dto.PatientDto;
 import com.seriuszg.medical.model.entity.Patient;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
+import org.springframework.stereotype.Component;
 
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, unmappedSourcePolicy = ReportingPolicy.IGNORE, componentModel = "spring")
+@Component
 public interface PatientMapper {
 
     PatientDto toDto(Patient patient);
