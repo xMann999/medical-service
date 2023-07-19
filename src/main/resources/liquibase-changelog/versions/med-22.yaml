@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: sg
+      changes:
+        - createTable:
+            tableName: doctor
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: doctor_id
+                  name: id
+                  type: int
+              - column:
+                  name: email
+                  type: varchar(50)
+                  constraints:
+                    unique: true
+              - column:
+                  name: password
+                  type: varchar(50)
+              - column:
+                  name: first_name
+                  type: varchar(50)
+              - column:
+                  name: last_name
+                  type: varchar(50)
+              - column:
+                  name: specialisation
+                  type: varchar(50)
