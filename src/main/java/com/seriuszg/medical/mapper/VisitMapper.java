@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, unmappedSourcePolicy = ReportingPolicy.IGNORE, componentModel = "spring")
-@Component
 public interface VisitMapper {
 
     @Mapping(source = "patient", target = "patientId", qualifiedByName = "mapToPatientId")

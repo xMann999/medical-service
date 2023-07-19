@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, unmappedSourcePolicy = ReportingPolicy.IGNORE, componentModel = "spring")
-@Component
 public interface PatientMapper {
 
     PatientDto toDto(Patient patient);
