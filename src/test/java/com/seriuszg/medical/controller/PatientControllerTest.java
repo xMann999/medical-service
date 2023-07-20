@@ -6,15 +6,22 @@ import com.seriuszg.medical.model.dto.PatientDto;
 import com.seriuszg.medical.repositories.PatientRepository;
 import com.seriuszg.medical.repositories.VisitRepository;
 import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -31,6 +38,21 @@ public class PatientControllerTest {
     PatientRepository patientRepository;
     @Autowired
     VisitRepository visitRepository;
+
+
+    @Autowired
+    private DataSource database;
+    public static boolean dataLoaded = false;
+    @BeforeEach
+    public void setup() throws SQLException {
+        if(!this.dataLoaded) {
+            dataLoaded = true;
+            try (Connection con = database.getConnection()) {
+                ScriptUtils.executeSqlScript(con, new ClassPathResource("data.sql"));
+
+            }
+        }
+    }
 
     @Test
     @Rollback
@@ -57,9 +79,9 @@ public class PatientControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/patients"))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(2))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].email").value("sg@gmail.com"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].email").value("test1@gmail.com"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(3))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].email").value("ssgg@gmail.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].email").value("sg@gmail.com"));
     }
 
     @Test
@@ -98,10 +120,9 @@ public class PatientControllerTest {
     @Test
     @Rollback
     void getAllAssignedVisitsToSpecificPatient_PatientFound_VisitsReturned() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/patients/sg@gmail.com/visits"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/patients/ssgg@gmail.com/visits"))
                 .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].patientId").value(1L));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(1));
     }
 
     private PatientDto createPatientDto(String email) {

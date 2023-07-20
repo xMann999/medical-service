@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: sg
+      changes:
+        - createTable:
+            tableName: visit
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: visit_id
+                  name: id
+                  type: int
+              - column:
+                  constraints:
+                    foreignKey: true
+                    foreignKeyName: fk_patient_id
+                  name: patient_id
+                  type: int
+              - column:
+                  name: visit_start_time
+                  type: datetime
+              - column:
+                  name: visit_end_time
+                  type: datetime
+              - column:
+                  name: duration
+                  type: varchar(255)

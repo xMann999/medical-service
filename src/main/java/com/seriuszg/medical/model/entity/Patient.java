@@ -1,8 +1,10 @@
 package com.seriuszg.medical.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.util.*;
 
 import java.time.LocalDate;
@@ -16,7 +18,7 @@ import java.time.LocalDate;
 public class Patient {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     private String email;
     private String password;
@@ -25,7 +27,7 @@ public class Patient {
     private String lastName;
     private String phoneNumber;
     private LocalDate birthday;
-    @JsonIgnore
+    @JsonIgnoreProperties("patient")
     @OneToMany(mappedBy = "patient")
     private Set<Visit> visits;
 

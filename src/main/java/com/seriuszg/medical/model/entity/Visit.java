@@ -1,5 +1,6 @@
 package com.seriuszg.medical.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +22,8 @@ public class Visit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @JsonIgnoreProperties("visits")
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "patient_id")
     private Patient patient;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
