@@ -5,7 +5,7 @@ import com.seriuszg.medical.exceptions.IncorrectEmailException;
 import com.seriuszg.medical.exceptions.RequiredFieldsNotFilledException;
 import com.seriuszg.medical.exceptions.PatientNotFoundException;
 import com.seriuszg.medical.mapper.PatientMapper;
-import com.seriuszg.medical.model.dto.EditedPatientDto;
+import com.seriuszg.medical.model.dto.PatientEditDto;
 import com.seriuszg.medical.model.dto.PatientDto;
 import com.seriuszg.medical.model.entity.Patient;
 import com.seriuszg.medical.repositories.PatientRepository;
@@ -21,10 +21,6 @@ public class PatientService {
 
     private final PatientRepository patientRepository;
     private final PatientMapper patientMapper;
-
-    private Patient getPatientByEmail(String email) {
-        return patientRepository.findByEmail(email).orElseThrow(PatientNotFoundException::new);
-    }
 
     public PatientDto getPatient(String email) {
         return patientMapper.toDto(getPatientByEmail(email));
@@ -53,27 +49,34 @@ public class PatientService {
         return patientMapper.toDto(patient);
     }
 
-    public EditedPatientDto updatePatientDetails(String email, EditedPatientDto editedPatientDto) {
+    public PatientEditDto updatePatientDetails(String email, PatientEditDto patientEditDto) {
         Patient patient = getPatientByEmail(email);
-        if (editedPatientDto.doesContainsNull()) {
+        if (patientEditDto.doesContainsNull()) {
             throw new RequiredFieldsNotFilledException();
         }
-        if (patientRepository.findByEmail(editedPatientDto.getEmail()).isPresent()) {
+        if (patientRepository.findByEmail(patientEditDto.getEmail()).isPresent() && !email.equals(patientEditDto.getEmail())) {
             throw new EmailAlreadyTakenException();
         }
-        patient.setFirstName(editedPatientDto.getFirstName());
-        patient.setLastName(editedPatientDto.getLastName());
-        patient.setPhoneNumber(editedPatientDto.getPhoneNumber());
-        patient.setEmail(editedPatientDto.getEmail());
+        patient.setFirstName(patientEditDto.getFirstName());
+        patient.setLastName(patientEditDto.getLastName());
+        patient.setPhoneNumber(patientEditDto.getPhoneNumber());
+        patient.setEmail(patientEditDto.getEmail());
         patientRepository.save(patient);
-        return editedPatientDto;
+        return patientEditDto;
     }
 
     public boolean updatePatientPassword(String email, String newPassword) {
+        if (newPassword == null) {
+            throw new RequiredFieldsNotFilledException();
+        }
         Patient patient = getPatientByEmail(email);
         patient.setPassword(newPassword);
         patientRepository.save(patient);
         return true;
+    }
+
+    private Patient getPatientByEmail(String email) {
+        return patientRepository.findByEmail(email).orElseThrow(PatientNotFoundException::new);
     }
 
 }

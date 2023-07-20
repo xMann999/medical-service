@@ -1,9 +1,6 @@
 package com.seriuszg.medical.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +16,10 @@ public class Doctor {
     private Long id;
     private String email;
     private String password;
-    private String fistName;
+    private String firstName;
     private String lastName;
     private String specialisation;
+    @ManyToOne
+    @JoinColumn(name = "facility_id")
+    private Facility facility;
 }

@@ -1,7 +1,7 @@
 package com.seriuszg.medical.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.seriuszg.medical.model.dto.EditedPatientDto;
+import com.seriuszg.medical.model.dto.PatientEditDto;
 import com.seriuszg.medical.model.dto.PatientDto;
 import com.seriuszg.medical.repositories.PatientRepository;
 import com.seriuszg.medical.repositories.VisitRepository;
@@ -74,9 +74,9 @@ public class PatientControllerTest {
     @Test
     @Rollback
     void editPatientDetails_DataCorrect_DetailsChanged() throws Exception {
-        EditedPatientDto editedPatientDto = new EditedPatientDto("Jan", "Kowalski", "77711", "222@gmail.com");
+        PatientEditDto patientEditDto = new PatientEditDto("Jan", "Kowalski", "77711", "222@gmail.com");
         mockMvc.perform(MockMvcRequestBuilders.patch("/patients/sg@gmail.com/details")
-                        .content(objectMapper.writeValueAsString(editedPatientDto))
+                        .content(objectMapper.writeValueAsString(patientEditDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("222@gmail.com"))

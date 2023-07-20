@@ -28,4 +28,5 @@ public class Patient {
     @JsonIgnore
     @OneToMany(mappedBy = "patient")
     private Set<Visit> visits;
+
 }

@@ -5,7 +5,7 @@ import com.seriuszg.medical.exceptions.IncorrectEmailException;
 import com.seriuszg.medical.exceptions.RequiredFieldsNotFilledException;
 import com.seriuszg.medical.exceptions.PatientNotFoundException;
 import com.seriuszg.medical.mapper.PatientMapper;
-import com.seriuszg.medical.model.dto.EditedPatientDto;
+import com.seriuszg.medical.model.dto.PatientEditDto;
 import com.seriuszg.medical.model.dto.PatientDto;
 import com.seriuszg.medical.model.entity.Patient;
 import com.seriuszg.medical.repositories.PatientRepository;
@@ -140,26 +140,26 @@ public class PatientServiceTest {
     @Test
     void updatePatientDetails_PatientFound_PatientDetailsChanged() {
         Patient patient = createPatient("ewee", 1L);
-        EditedPatientDto editedPatientDto = new EditedPatientDto(
+        PatientEditDto patientEditDto = new PatientEditDto(
                 "changedf",
                 "changedl",
                 "997",
                 "sfdd");
         when(patientRepository.findByEmail(eq("ewee"))).thenReturn(Optional.of(patient));
 
-        var result = patientService.updatePatientDetails("ewee", editedPatientDto);
+        var result = patientService.updatePatientDetails("ewee", patientEditDto);
 
-        Assertions.assertEquals(editedPatientDto, result);
-        Assertions.assertEquals("changedf", editedPatientDto.getFirstName());
-        Assertions.assertEquals("changedl", editedPatientDto.getLastName());
-        Assertions.assertNotEquals("ewee", editedPatientDto.getEmail());
+        Assertions.assertEquals(patientEditDto, result);
+        Assertions.assertEquals("changedf", patientEditDto.getFirstName());
+        Assertions.assertEquals("changedl", patientEditDto.getLastName());
+        Assertions.assertNotEquals("ewee", patientEditDto.getEmail());
     }
 
     @Test
     void updatePatientDetails_PatientNotFound_ExceptionThrown() {
-        EditedPatientDto editedPatientDto = new EditedPatientDto("dd", "dd", "345", "dd");
+        PatientEditDto patientEditDto = new PatientEditDto("dd", "dd", "345", "dd");
 
-        var exception = Assertions.assertThrows(PatientNotFoundException.class, () -> patientService.updatePatientDetails(any(), editedPatientDto));
+        var exception = Assertions.assertThrows(PatientNotFoundException.class, () -> patientService.updatePatientDetails(any(), patientEditDto));
 
         Assertions.assertEquals("Nie znaleziono pacjenta zarejestrowanego na ten adres e-mail", exception.getMessage());
         Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
@@ -169,10 +169,10 @@ public class PatientServiceTest {
     void updatePatientDetails_InvalidData_ExceptionThrown() {
         String email = "ddd@gmail.com";
         Patient patient = createPatient(email, 1L);
-        EditedPatientDto editedPatientDto = new EditedPatientDto(null, "ddd", "123", "dd");
+        PatientEditDto patientEditDto = new PatientEditDto(null, "ddd", "123", "dd");
         when(patientRepository.findByEmail(eq(email))).thenReturn(Optional.of(patient));
 
-        var exception = Assertions.assertThrows(RequiredFieldsNotFilledException.class, () -> patientService.updatePatientDetails(email, editedPatientDto));
+        var exception = Assertions.assertThrows(RequiredFieldsNotFilledException.class, () -> patientService.updatePatientDetails(email, patientEditDto));
 
         Assertions.assertEquals("Wypełnij wszystkie wymagane pola", exception.getMessage());
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());

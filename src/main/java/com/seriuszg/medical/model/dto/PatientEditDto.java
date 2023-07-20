@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class EditedPatientDto {
+public class PatientEditDto {
 
     private String firstName;
     private String lastName;

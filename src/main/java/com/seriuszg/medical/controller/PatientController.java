@@ -1,6 +1,6 @@
 package com.seriuszg.medical.controller;
 
-import com.seriuszg.medical.model.dto.EditedPatientDto;
+import com.seriuszg.medical.model.dto.PatientEditDto;
 import com.seriuszg.medical.model.dto.PatientDto;
 import com.seriuszg.medical.model.dto.VisitResponse;
 import com.seriuszg.medical.service.PatientService;
@@ -23,7 +23,6 @@ public class PatientController {
     @PostMapping
     public PatientDto createPatient(@RequestBody PatientDto patientDTO) {
         return patientService.savePatient(patientDTO);
-
     }
 
     @GetMapping("/{email}")
@@ -42,8 +41,8 @@ public class PatientController {
     }
 
     @PatchMapping("/{email}/details")
-    public EditedPatientDto editPatientDetails(@PathVariable String email, @RequestBody EditedPatientDto editedPatientDto) {
-        return patientService.updatePatientDetails(email, editedPatientDto);
+    public PatientEditDto editPatientDetails(@PathVariable String email, @RequestBody PatientEditDto patientEditDto) {
+        return patientService.updatePatientDetails(email, patientEditDto);
     }
 
     @PatchMapping("/{email}/password")
