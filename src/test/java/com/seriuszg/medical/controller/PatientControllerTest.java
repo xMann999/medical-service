@@ -38,8 +38,6 @@ public class PatientControllerTest {
     PatientRepository patientRepository;
     @Autowired
     VisitRepository visitRepository;
-
-
     @Autowired
     private DataSource database;
     public static boolean dataLoaded = false;
@@ -109,7 +107,7 @@ public class PatientControllerTest {
     @Rollback
     void editPatientPassword_PatientFound_PasswordChanged() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.patch("/patients/test1@gmail.com/password")
-                        .content(objectMapper.writeValueAsString("2225"))
+                        .content("2225")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isOk())

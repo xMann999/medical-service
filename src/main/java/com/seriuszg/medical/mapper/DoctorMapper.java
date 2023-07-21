@@ -9,6 +9,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.Optional;
+
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, unmappedSourcePolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface DoctorMapper {
 
@@ -21,9 +23,6 @@ public interface DoctorMapper {
 
     @Named("mapToFacilityId")
     default Long mapToFacilityId (Facility facility) {
-        if (facility == null) {
-            return null;
-        }
-        return facility.getId();
+        return Optional.ofNullable(facility).map(Facility::getId).orElse(null);
     }
 }

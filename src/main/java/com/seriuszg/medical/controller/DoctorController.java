@@ -3,9 +3,9 @@ package com.seriuszg.medical.controller;
 import com.seriuszg.medical.model.dto.DoctorDto;
 import com.seriuszg.medical.model.dto.DoctorRegistrationDto;
 import com.seriuszg.medical.model.dto.DoctorEditDto;
+import com.seriuszg.medical.model.dto.MessageDto;
 import com.seriuszg.medical.service.DoctorService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,13 +19,13 @@ public class DoctorController {
     private final DoctorService doctorService;
 
     @PostMapping
-    public DoctorDto createPatient(@RequestBody DoctorRegistrationDto doctorRegistrationDto) {
+    public DoctorDto createDoctor(@RequestBody DoctorRegistrationDto doctorRegistrationDto) {
         return doctorService.saveDoctor(doctorRegistrationDto);
     }
 
-    @GetMapping("/{email}")
-    public DoctorDto getDoctor(@PathVariable String email) {
-        return doctorService.getDoctor(email);
+    @GetMapping("/{id}")
+    public DoctorDto getDoctor(@PathVariable Long id) {
+        return doctorService.getDoctor(id);
     }
 
     @GetMapping
@@ -33,26 +33,24 @@ public class DoctorController {
         return doctorService.getAllDoctors();
     }
 
-    @DeleteMapping("/{email}")
-    public DoctorDto deleteDoctor(@PathVariable String email) {
-        return doctorService.deleteDoctor(email);
+    @DeleteMapping("/{id}")
+    public DoctorDto deleteDoctor(@PathVariable Long id) {
+        return doctorService.deleteDoctor(id);
     }
 
-    @PatchMapping("/{email}/details")
-    public DoctorEditDto editedDoctorDetails(@PathVariable String email, @RequestBody DoctorEditDto doctorEditDto) {
-        return doctorService.editDoctorDetails(email, doctorEditDto);
+    @PatchMapping("/{id}/details")
+    public DoctorEditDto editDoctorDetails(@PathVariable Long id, @RequestBody DoctorEditDto doctorEditDto) {
+        return doctorService.editDoctorDetails(id, doctorEditDto);
     }
 
-    @PatchMapping("/{email}/password")
-    public ResponseEntity<String> editPatientPassword(@PathVariable String email, @RequestBody String newPassword) {
-        doctorService.editDoctorPassword(email, newPassword);
-        return new ResponseEntity<>("Pomyślnie zmieniono hasło", HttpStatus.OK);
+    @PatchMapping("/{id}/password")
+    public ResponseEntity<MessageDto> editPatientPassword(@PathVariable Long id, @RequestBody String newPassword) {
+        MessageDto messageDto = doctorService.editDoctorPassword(id, newPassword);
+        return ResponseEntity.status(messageDto.getHttpStatus()).body(messageDto);
     }
 
-    @PatchMapping("/{email}/assign")
-    public DoctorDto assignDoctorToFacility(@PathVariable String email, @RequestBody Long id) {
-        return doctorService.assignDoctorToFacility(email, id);
+    @PatchMapping("/{id}/assign")
+    public DoctorDto assignDoctorToFacility(@PathVariable Long id, @RequestBody Long facilityId) {
+        return doctorService.assignDoctorToFacility(id, facilityId);
     }
-
-
 }

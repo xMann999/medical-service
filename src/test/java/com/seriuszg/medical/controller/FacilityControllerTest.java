@@ -1,9 +1,9 @@
 package com.seriuszg.medical.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.seriuszg.medical.model.dto.VisitRequest;
-import com.seriuszg.medical.repositories.PatientRepository;
-import com.seriuszg.medical.repositories.VisitRepository;
+import com.seriuszg.medical.model.dto.FacilityRegistrationDto;
+import com.seriuszg.medical.repositories.DoctorRepository;
+import com.seriuszg.medical.repositories.FacilityRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,24 +21,23 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.Duration;
-import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
-public class VisitControllerTest {
+public class FacilityControllerTest {
 
     @Autowired
     MockMvc mockMvc;
     @Autowired
     ObjectMapper objectMapper;
     @Autowired
-    VisitRepository visitRepository;
+    DoctorRepository doctorRepository;
     @Autowired
-    PatientRepository patientRepository;
+    FacilityRepository facilityRepository;
+
     @Autowired
     private DataSource database;
     @BeforeEach
@@ -53,23 +52,31 @@ public class VisitControllerTest {
 
     @Test
     @Rollback
-    void createVisit_DataCorrect_VisitCreated() throws Exception {
-        VisitRequest visitRequest = new VisitRequest(LocalDateTime.of(2023,12,05,15,00,0), Duration.parse("PT30M"));
-        mockMvc.perform(MockMvcRequestBuilders.post("/visits")
-                .content(objectMapper.writeValueAsString(visitRequest))
+    void saveFacility_DataCorrect_FacilitySaved() throws Exception {
+        FacilityRegistrationDto facilityRegistrationDto = new FacilityRegistrationDto("Szpital9", "Lodz", "91-009", "Piłsudskiego", "91");
+        mockMvc.perform(MockMvcRequestBuilders.post("/facilities")
+                .content(objectMapper.writeValueAsString(facilityRegistrationDto))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.visitEndTime").value("2023-12-05T15:30:00"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(3L));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(2L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Szpital9"));
     }
 
     @Test
     @Rollback
-    void assignPatientToVisit_PatientAndVisitFound_PatientAssigned() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.patch("/visits/2/assignPatient")
-                .content(objectMapper.writeValueAsString(1L))
-                .contentType(MediaType.APPLICATION_JSON))
+    void deleteFacility_FacilityFound_FacilityDeleted() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/facilities/1"))
                 .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.patientId").value(1L));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("SZPITAL"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.city").value("Łódź"));
+    }
+
+    @Test
+    @Rollback
+    void showAllFacilities_FacilitiesFound_FacilitiesReturned() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/facilities"))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("SZPITAL"));
     }
 }

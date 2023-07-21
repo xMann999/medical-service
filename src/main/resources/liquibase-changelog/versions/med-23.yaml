@@ -1,39 +1,33 @@
 databaseChangeLog:
   - changeSet:
-      id: 3
+      id: 4
       author: sg
       changes:
         - createTable:
-            tableName: doctor
+            tableName: facility
             columns:
               - column:
                   autoIncrement: true
                   constraints:
                     nullable: false
                     primaryKey: true
-                    primaryKeyName: doctor_id
+                    primaryKeyName: pk_facility_id
                   name: id
                   type: int
               - column:
-                  name: email
+                  name: name
                   type: varchar(50)
                   constraints:
                     unique: true
               - column:
-                  name: password
+                  name: city
                   type: varchar(50)
               - column:
-                  name: first_name
+                  name: postal_code
                   type: varchar(50)
               - column:
-                  name: last_name
+                  name: street
                   type: varchar(50)
               - column:
-                  name: specialisation
+                  name: street_no
                   type: varchar(50)
-              - column:
-                  constraints:
-                    foreignKey: true
-                    foreignKeyName: fk_facility_id
-                  name: facility_id
-                  type: int
