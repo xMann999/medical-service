@@ -3,6 +3,15 @@ databaseChangeLog:
       id: 4
       author: sg
       changes:
+        - addColumn:
+            tableName: doctor
+            columns:
+              - column:
+                  constraints:
+                    foreignKey: true
+                    foreignKeyName: fk_facility_id
+                  name: facility_id
+                  type: int
         - createTable:
             tableName: facility
             columns:

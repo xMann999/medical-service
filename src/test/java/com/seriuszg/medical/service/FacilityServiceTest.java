@@ -94,6 +94,4 @@ public class FacilityServiceTest {
                 .streetNo("10")
                 .build();
     }
-
-
 }

@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
 public interface VisitRepository extends JpaRepository<Visit, Long> {
 
     Optional<Visit> findById(Long id);

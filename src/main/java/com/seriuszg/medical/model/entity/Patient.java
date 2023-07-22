@@ -2,6 +2,7 @@ package com.seriuszg.medical.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.seriuszg.medical.model.dto.PatientEditDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,4 +32,10 @@ public class Patient {
     @OneToMany(mappedBy = "patient")
     private Set<Visit> visits;
 
+    public void updateDetails(PatientEditDto patientEditDto) {
+        this.email = patientEditDto.getEmail();
+        this.firstName = patientEditDto.getFirstName();
+        this.lastName = patientEditDto.getLastName();
+        this.phoneNumber = patientEditDto.getPhoneNumber();
+    }
 }

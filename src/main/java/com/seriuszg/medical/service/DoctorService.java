@@ -54,7 +54,7 @@ public class DoctorService {
         return doctorMapper.toDto(doctor);
     }
 
-    public DoctorEditDto editDoctorDetails(Long id, DoctorEditDto doctorEditDto) {
+    public DoctorDto editDoctorDetails(Long id, DoctorEditDto doctorEditDto) {
         if (!doctorEditDto.isCorrect()) {
             throw new RequiredFieldsNotFilledException();
         }
@@ -62,12 +62,8 @@ public class DoctorService {
         if (doctorRepository.findByEmail(doctorEditDto.getEmail()).isPresent() && !doctorEditDto.getEmail().equals(doctor.getEmail())) {
             throw new EmailAlreadyTakenException();
         }
-        doctor.setEmail(doctorEditDto.getEmail());
-        doctor.setFirstName(doctorEditDto.getFirstName());
-        doctor.setLastName(doctorEditDto.getLastName());
-        doctor.setSpecialisation(doctorEditDto.getSpecialisation());
-        doctorRepository.save(doctor);
-        return doctorEditDto;
+        doctor.updateDetails(doctorEditDto);
+        return doctorMapper.toDto(doctorRepository.save(doctor));
     }
 
     public MessageDto editDoctorPassword(Long id, String newPassword) {

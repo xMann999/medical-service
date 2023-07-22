@@ -4,6 +4,7 @@ import com.seriuszg.medical.mapper.DoctorMapper;
 import com.seriuszg.medical.model.dto.DoctorDto;
 import com.seriuszg.medical.model.dto.DoctorEditDto;
 import com.seriuszg.medical.model.dto.DoctorRegistrationDto;
+import com.seriuszg.medical.model.dto.Specialisation;
 import com.seriuszg.medical.model.entity.Doctor;
 import com.seriuszg.medical.model.entity.Facility;
 import com.seriuszg.medical.repositories.DoctorRepository;
@@ -37,7 +38,7 @@ public class DoctorServiceTest {
 
     @Test
     void saveDoctor_DataCorrect_DoctorSaved() {
-        DoctorRegistrationDto doctorRegistrationDto = new DoctorRegistrationDto("11@gmail.com", "eee", "Jan", "Walczyk", "eeee");
+        DoctorRegistrationDto doctorRegistrationDto = new DoctorRegistrationDto("11@gmail.com", "eee", "Jan", "Walczyk", Specialisation.oncology);
         DoctorDto doctorDto = createDoctorDto("11@gmail.com", 1L, null);
         Doctor doctor = createDoctor("11@gmail.com", 1L, null);
         when(doctorRepository.findByEmail(any())).thenReturn(Optional.empty());
@@ -85,10 +86,13 @@ public class DoctorServiceTest {
 
     @Test
     void editDoctorDetails_DataCorrect_DetailsUpdated() {
-        DoctorEditDto doctorEditDto = new DoctorEditDto("11@gmail.com", "Andrzej", "Kowalski", "ee");
+        DoctorEditDto doctorEditDto = new DoctorEditDto("11@gmail.com", "Andrzej", "Kowalski", Specialisation.dermatology);
         Doctor doctor = createDoctor("11@gmail.com", 1L, null);
+        DoctorDto doctorDto = new DoctorDto(1L, "11@gmail.com", "Andrzej", "Kowalski", Specialisation.dermatology, null);
         when(doctorRepository.findByEmail(any())).thenReturn(Optional.of(doctor));
         when(doctorRepository.findById(eq(1L))).thenReturn(Optional.of(doctor));
+        when(doctorMapper.toDto(eq(doctor))).thenReturn(doctorDto);
+        when(doctorRepository.save(eq(doctor))).thenReturn(doctor);
 
         var result = doctorService.editDoctorDetails(1L, doctorEditDto);
 
@@ -124,11 +128,11 @@ public class DoctorServiceTest {
     }
 
     private Doctor createDoctor(String email, Long id, Facility facility) {
-        return new Doctor(id, email, "eee", "Jan", "Walczyk", "eeee", facility);
+        return new Doctor(id, email, "eee", "Jan", "Walczyk", Specialisation.oncology, facility);
     }
 
     private DoctorDto createDoctorDto(String email, Long id, Long facilityId) {
-        return new DoctorDto(id, email, "eee", "Jan", "Walczyk", "eeee", facilityId);
+        return new DoctorDto(id, email,"Jan", "Walczyk", Specialisation.oncology, facilityId);
     }
 
     private Facility createFacility(String name, Long id) {

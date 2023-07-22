@@ -1,5 +1,6 @@
 package com.seriuszg.medical.controller;
 
+import com.seriuszg.medical.model.dto.MessageDto;
 import com.seriuszg.medical.model.dto.PatientEditDto;
 import com.seriuszg.medical.model.dto.PatientDto;
 import com.seriuszg.medical.model.dto.VisitResponse;
@@ -41,14 +42,14 @@ public class PatientController {
     }
 
     @PatchMapping("/{email}/details")
-    public PatientEditDto editPatientDetails(@PathVariable String email, @RequestBody PatientEditDto patientEditDto) {
+    public PatientDto editPatientDetails(@PathVariable String email, @RequestBody PatientEditDto patientEditDto) {
         return patientService.updatePatientDetails(email, patientEditDto);
     }
 
     @PatchMapping("/{email}/password")
-    public ResponseEntity<String> editPatientPassword(@PathVariable String email, @RequestBody String newPassword) {
-        patientService.updatePatientPassword(email, newPassword);
-        return new ResponseEntity<>("Pomyślnie zmieniono hasło", HttpStatus.OK);
+    public ResponseEntity<MessageDto> editPatientPassword(@PathVariable String email, @RequestBody String newPassword) {
+        MessageDto messageDto = patientService.updatePatientPassword(email, newPassword);
+        return ResponseEntity.status(messageDto.getHttpStatus()).body(messageDto);
     }
 
     @GetMapping("/{email}/visits")

@@ -111,8 +111,8 @@ public class PatientControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$").value("Pomyślnie zmieniono hasło"));
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Pomyślnie zmieniono hasło"));
     }
 
     @Test

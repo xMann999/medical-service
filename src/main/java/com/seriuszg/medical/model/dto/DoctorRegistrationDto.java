@@ -11,16 +11,13 @@ public class DoctorRegistrationDto {
     private String password;
     private String firstName;
     private String lastName;
-    private String specialisation;
+    private Specialisation specialisation;
 
     public boolean isCorrect() {
-        if (this.email == null ||
-                this.password == null ||
-                this.firstName == null ||
-                this.lastName == null ||
-                this.specialisation == null) {
-            return false;
-        }
-        return true;
+        return this.email != null &&
+                this.password != null &&
+                this.firstName != null &&
+                this.lastName != null &&
+                this.specialisation != null;
     }
 }

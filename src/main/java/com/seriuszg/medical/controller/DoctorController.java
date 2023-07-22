@@ -39,7 +39,7 @@ public class DoctorController {
     }
 
     @PatchMapping("/{id}/details")
-    public DoctorEditDto editDoctorDetails(@PathVariable Long id, @RequestBody DoctorEditDto doctorEditDto) {
+    public DoctorDto editDoctorDetails(@PathVariable Long id, @RequestBody DoctorEditDto doctorEditDto) {
         return doctorService.editDoctorDetails(id, doctorEditDto);
     }
 

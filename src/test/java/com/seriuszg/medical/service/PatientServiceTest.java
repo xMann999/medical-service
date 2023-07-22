@@ -145,14 +145,23 @@ public class PatientServiceTest {
                 "changedl",
                 "997",
                 "sfdd");
+        PatientDto patientDto = new PatientDto(1L,
+                "sfdd",
+                "dsfdf",
+                "dfdfdf",
+                "changedf",
+                "changedl",
+                "997",
+                LocalDate.of(2019, 3, 3));
         when(patientRepository.findByEmail(eq("ewee"))).thenReturn(Optional.of(patient));
+        when(patientMapper.toDto(eq(patient))).thenReturn(patientDto);
 
         var result = patientService.updatePatientDetails("ewee", patientEditDto);
 
-        Assertions.assertEquals(patientEditDto, result);
-        Assertions.assertEquals("changedf", patientEditDto.getFirstName());
-        Assertions.assertEquals("changedl", patientEditDto.getLastName());
-        Assertions.assertNotEquals("ewee", patientEditDto.getEmail());
+        Assertions.assertEquals(patientDto, result);
+        Assertions.assertEquals("changedf", result.getFirstName());
+        Assertions.assertEquals("changedl", result.getLastName());
+        Assertions.assertNotEquals("ewee", result.getEmail());
     }
 
     @Test
@@ -186,7 +195,6 @@ public class PatientServiceTest {
 
         var result = patientService.updatePatientPassword(email, "changed");
 
-        Assertions.assertTrue(result);
         Assertions.assertEquals("changed", patient.getPassword());
     }
 

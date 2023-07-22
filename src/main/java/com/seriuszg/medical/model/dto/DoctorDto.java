@@ -10,10 +10,8 @@ public class DoctorDto {
 
     private Long id;
     private String email;
-    @JsonIgnore
-    private String password;
     private String firstName;
     private String lastName;
-    private String specialisation;
+    private Specialisation specialisation;
     private Long facilityId;
 }

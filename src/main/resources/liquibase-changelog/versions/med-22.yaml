@@ -31,9 +31,3 @@ databaseChangeLog:
               - column:
                   name: specialisation
                   type: varchar(50)
-              - column:
-                  constraints:
-                    foreignKey: true
-                    foreignKeyName: fk_facility_id
-                  name: facility_id
-                  type: int

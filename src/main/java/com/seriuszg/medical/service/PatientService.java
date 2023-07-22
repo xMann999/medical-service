@@ -5,11 +5,13 @@ import com.seriuszg.medical.exceptions.IncorrectEmailException;
 import com.seriuszg.medical.exceptions.RequiredFieldsNotFilledException;
 import com.seriuszg.medical.exceptions.PatientNotFoundException;
 import com.seriuszg.medical.mapper.PatientMapper;
+import com.seriuszg.medical.model.dto.MessageDto;
 import com.seriuszg.medical.model.dto.PatientEditDto;
 import com.seriuszg.medical.model.dto.PatientDto;
 import com.seriuszg.medical.model.entity.Patient;
 import com.seriuszg.medical.repositories.PatientRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,7 +51,7 @@ public class PatientService {
         return patientMapper.toDto(patient);
     }
 
-    public PatientEditDto updatePatientDetails(String email, PatientEditDto patientEditDto) {
+    public PatientDto updatePatientDetails(String email, PatientEditDto patientEditDto) {
         Patient patient = getPatientByEmail(email);
         if (patientEditDto.doesContainsNull()) {
             throw new RequiredFieldsNotFilledException();
@@ -57,22 +59,19 @@ public class PatientService {
         if (patientRepository.findByEmail(patientEditDto.getEmail()).isPresent() && !email.equals(patientEditDto.getEmail())) {
             throw new EmailAlreadyTakenException();
         }
-        patient.setFirstName(patientEditDto.getFirstName());
-        patient.setLastName(patientEditDto.getLastName());
-        patient.setPhoneNumber(patientEditDto.getPhoneNumber());
-        patient.setEmail(patientEditDto.getEmail());
+        patient.updateDetails(patientEditDto);
         patientRepository.save(patient);
-        return patientEditDto;
+        return patientMapper.toDto(patient);
     }
 
-    public boolean updatePatientPassword(String email, String newPassword) {
+    public MessageDto updatePatientPassword(String email, String newPassword) {
         if (newPassword == null) {
             throw new RequiredFieldsNotFilledException();
         }
         Patient patient = getPatientByEmail(email);
         patient.setPassword(newPassword);
         patientRepository.save(patient);
-        return true;
+        return new MessageDto("Pomyślnie zmieniono hasło", "CHANGE_PASSWORD", HttpStatus.OK);
     }
 
     private Patient getPatientByEmail(String email) {

@@ -10,7 +10,7 @@ public class DoctorEditDto {
     private String email;
     private String firstName;
     private String lastName;
-    private String specialisation;
+    private Specialisation specialisation;
 
     public boolean isCorrect() {
         return this.email != null &&

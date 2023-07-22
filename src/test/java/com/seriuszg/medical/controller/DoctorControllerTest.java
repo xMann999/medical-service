@@ -3,6 +3,7 @@ package com.seriuszg.medical.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seriuszg.medical.model.dto.DoctorEditDto;
 import com.seriuszg.medical.model.dto.DoctorRegistrationDto;
+import com.seriuszg.medical.model.dto.Specialisation;
 import com.seriuszg.medical.repositories.DoctorRepository;
 import com.seriuszg.medical.repositories.FacilityRepository;
 import jakarta.transaction.Transactional;
@@ -54,7 +55,7 @@ public class DoctorControllerTest {
     @Test
     @Rollback
     void createDoctor_DataCorrect_DoctorCreated() throws Exception {
-        DoctorRegistrationDto doctorRegistrationDto = new DoctorRegistrationDto("11@gmail.com", "eee", "Monika", "Królikowska", "wszystko");
+        DoctorRegistrationDto doctorRegistrationDto = new DoctorRegistrationDto("11@gmail.com", "eee", "Monika", "Królikowska", Specialisation.neurology);
         mockMvc.perform(MockMvcRequestBuilders.post("/doctors")
                 .content(objectMapper.writeValueAsString(doctorRegistrationDto))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -84,7 +85,7 @@ public class DoctorControllerTest {
     @Test
     @Rollback
     void editDoctorDetails_DataCorrect_DoctorEdited() throws Exception {
-        DoctorEditDto doctorEditDto = new DoctorEditDto("sgg@gmail.com","Sergiusz","Gołacki","nic");
+        DoctorEditDto doctorEditDto = new DoctorEditDto("sgg@gmail.com","Sergiusz","Gołacki",Specialisation.anesthesiology);
         mockMvc.perform(MockMvcRequestBuilders.patch("/doctors/1/details")
                 .content(objectMapper.writeValueAsString(doctorEditDto))
                 .contentType(MediaType.APPLICATION_JSON))
