@@ -1,0 +1,5 @@
+package com.seriuszg.medical.model.dto;
+
+public enum Specialisation {
+    ANESTHESIOLOGY, DERMATOLOGY, RADIOLOGY, FAMILY_MEDICINE, NEUROLOGY, PEDIATRICS, ONCOLOGY, UROLOGY, PATHOLOGY, SURGERY
+}

@@ -1,7 +1,7 @@
 package com.seriuszg.medical.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.seriuszg.medical.model.dto.EditedPatientDto;
+import com.seriuszg.medical.model.dto.PatientEditDto;
 import com.seriuszg.medical.model.dto.PatientDto;
 import com.seriuszg.medical.repositories.PatientRepository;
 import com.seriuszg.medical.repositories.VisitRepository;
@@ -38,8 +38,6 @@ public class PatientControllerTest {
     PatientRepository patientRepository;
     @Autowired
     VisitRepository visitRepository;
-
-
     @Autowired
     private DataSource database;
     public static boolean dataLoaded = false;
@@ -96,9 +94,9 @@ public class PatientControllerTest {
     @Test
     @Rollback
     void editPatientDetails_DataCorrect_DetailsChanged() throws Exception {
-        EditedPatientDto editedPatientDto = new EditedPatientDto("Jan", "Kowalski", "77711", "222@gmail.com");
+        PatientEditDto patientEditDto = new PatientEditDto("Jan", "Kowalski", "77711", "222@gmail.com");
         mockMvc.perform(MockMvcRequestBuilders.patch("/patients/sg@gmail.com/details")
-                        .content(objectMapper.writeValueAsString(editedPatientDto))
+                        .content(objectMapper.writeValueAsString(patientEditDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("222@gmail.com"))
@@ -109,12 +107,12 @@ public class PatientControllerTest {
     @Rollback
     void editPatientPassword_PatientFound_PasswordChanged() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.patch("/patients/test1@gmail.com/password")
-                        .content(objectMapper.writeValueAsString("2225"))
+                        .content("2225")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$").value("Pomyślnie zmieniono hasło"));
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Pomyślnie zmieniono hasło"));
     }
 
     @Test
