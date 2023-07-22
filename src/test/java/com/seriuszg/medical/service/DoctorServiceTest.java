@@ -38,7 +38,7 @@ public class DoctorServiceTest {
 
     @Test
     void saveDoctor_DataCorrect_DoctorSaved() {
-        DoctorRegistrationDto doctorRegistrationDto = new DoctorRegistrationDto("11@gmail.com", "eee", "Jan", "Walczyk", Specialisation.oncology);
+        DoctorRegistrationDto doctorRegistrationDto = new DoctorRegistrationDto("11@gmail.com", "eee", "Jan", "Walczyk", Specialisation.ONCOLOGY);
         DoctorDto doctorDto = createDoctorDto("11@gmail.com", 1L, null);
         Doctor doctor = createDoctor("11@gmail.com", 1L, null);
         when(doctorRepository.findByEmail(any())).thenReturn(Optional.empty());
@@ -86,9 +86,9 @@ public class DoctorServiceTest {
 
     @Test
     void editDoctorDetails_DataCorrect_DetailsUpdated() {
-        DoctorEditDto doctorEditDto = new DoctorEditDto("11@gmail.com", "Andrzej", "Kowalski", Specialisation.dermatology);
+        DoctorEditDto doctorEditDto = new DoctorEditDto("11@gmail.com", "Andrzej", "Kowalski", Specialisation.DERMATOLOGY);
         Doctor doctor = createDoctor("11@gmail.com", 1L, null);
-        DoctorDto doctorDto = new DoctorDto(1L, "11@gmail.com", "Andrzej", "Kowalski", Specialisation.dermatology, null);
+        DoctorDto doctorDto = new DoctorDto(1L, "11@gmail.com", "Andrzej", "Kowalski", Specialisation.DERMATOLOGY, null);
         when(doctorRepository.findByEmail(any())).thenReturn(Optional.of(doctor));
         when(doctorRepository.findById(eq(1L))).thenReturn(Optional.of(doctor));
         when(doctorMapper.toDto(eq(doctor))).thenReturn(doctorDto);
@@ -128,11 +128,11 @@ public class DoctorServiceTest {
     }
 
     private Doctor createDoctor(String email, Long id, Facility facility) {
-        return new Doctor(id, email, "eee", "Jan", "Walczyk", Specialisation.oncology, facility);
+        return new Doctor(id, email, "eee", "Jan", "Walczyk", Specialisation.ONCOLOGY, facility);
     }
 
     private DoctorDto createDoctorDto(String email, Long id, Long facilityId) {
-        return new DoctorDto(id, email,"Jan", "Walczyk", Specialisation.oncology, facilityId);
+        return new DoctorDto(id, email,"Jan", "Walczyk", Specialisation.ONCOLOGY, facilityId);
     }
 
     private Facility createFacility(String name, Long id) {

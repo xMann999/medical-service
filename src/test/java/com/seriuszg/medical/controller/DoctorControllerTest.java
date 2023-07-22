@@ -55,7 +55,7 @@ public class DoctorControllerTest {
     @Test
     @Rollback
     void createDoctor_DataCorrect_DoctorCreated() throws Exception {
-        DoctorRegistrationDto doctorRegistrationDto = new DoctorRegistrationDto("11@gmail.com", "eee", "Monika", "Królikowska", Specialisation.neurology);
+        DoctorRegistrationDto doctorRegistrationDto = new DoctorRegistrationDto("11@gmail.com", "eee", "Monika", "Królikowska", Specialisation.NEUROLOGY);
         mockMvc.perform(MockMvcRequestBuilders.post("/doctors")
                 .content(objectMapper.writeValueAsString(doctorRegistrationDto))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -85,7 +85,7 @@ public class DoctorControllerTest {
     @Test
     @Rollback
     void editDoctorDetails_DataCorrect_DoctorEdited() throws Exception {
-        DoctorEditDto doctorEditDto = new DoctorEditDto("sgg@gmail.com","Sergiusz","Gołacki",Specialisation.anesthesiology);
+        DoctorEditDto doctorEditDto = new DoctorEditDto("sgg@gmail.com","Sergiusz","Gołacki",Specialisation.ANESTHESIOLOGY);
         mockMvc.perform(MockMvcRequestBuilders.patch("/doctors/1/details")
                 .content(objectMapper.writeValueAsString(doctorEditDto))
                 .contentType(MediaType.APPLICATION_JSON))
