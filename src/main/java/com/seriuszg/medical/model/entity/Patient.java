@@ -29,8 +29,8 @@ public class Patient {
     private String phoneNumber;
     private LocalDate birthday;
     @JsonIgnoreProperties("patient")
-    @OneToMany(mappedBy = "patient")
-    private Set<Visit> visits;
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Visit> visits = new HashSet<>();
 
     public void updateDetails(PatientEditDto patientEditDto) {
         this.email = patientEditDto.getEmail();

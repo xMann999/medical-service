@@ -11,6 +11,7 @@ import com.seriuszg.medical.model.dto.PatientDto;
 import com.seriuszg.medical.model.entity.Patient;
 import com.seriuszg.medical.repositories.PatientRepository;
 import com.seriuszg.medical.repositories.VisitRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class PatientService {
         return patientMapper.toDto(getPatientByEmail(email));
     }
 
+    @Transactional
     public PatientDto savePatient(PatientDto patientDTO) {
         if (patientDTO.getEmail() == null) {
             throw new IncorrectEmailException();
@@ -47,6 +49,7 @@ public class PatientService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public PatientDto deletePatient(String email) {
         Patient patient = getPatientByEmail(email);
         visitRepository.findByPatientEmail(email).stream().forEach(visit -> visit.setPatient(null));
@@ -55,6 +58,7 @@ public class PatientService {
         return patientMapper.toDto(patient);
     }
 
+    @Transactional
     public PatientDto updatePatientDetails(String email, PatientEditDto patientEditDto) {
         Patient patient = getPatientByEmail(email);
         if (patientEditDto.doesContainsNull()) {
@@ -68,6 +72,7 @@ public class PatientService {
         return patientMapper.toDto(patient);
     }
 
+    @Transactional
     public MessageDto updatePatientPassword(String email, String newPassword) {
         if (newPassword == null) {
             throw new RequiredFieldsNotFilledException();
