@@ -2,15 +2,16 @@ package com.seriuszg.medical.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PatientEditDto {
 
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
-    private String email;
+    private final String firstName;
+    private final String lastName;
+    private final String phoneNumber;
+    private final String email;
 
     public boolean doesContainsNull() {
         if (this.getFirstName() == null

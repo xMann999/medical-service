@@ -51,6 +51,7 @@ public class DoctorService {
     public DoctorDto deleteDoctor(Long id) {
         Doctor doctor = getDoctorById(id);
         doctorRepository.delete(doctor);
+
         return doctorMapper.toDto(doctor);
     }
 

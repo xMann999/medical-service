@@ -4,19 +4,20 @@ import com.seriuszg.medical.model.entity.Patient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
 @Data
 @Builder
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class VisitResponse {
 
-    private Long id;
+    private final Long id;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime visitStartTime;
+    private final LocalDateTime visitStartTime;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime visitEndTime;
-    private Long patientId;
+    private final LocalDateTime visitEndTime;
+    private final Long patientId;
 }

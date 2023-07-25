@@ -10,6 +10,7 @@ import com.seriuszg.medical.model.dto.PatientEditDto;
 import com.seriuszg.medical.model.dto.PatientDto;
 import com.seriuszg.medical.model.entity.Patient;
 import com.seriuszg.medical.repositories.PatientRepository;
+import com.seriuszg.medical.repositories.VisitRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class PatientService {
 
     private final PatientRepository patientRepository;
     private final PatientMapper patientMapper;
+    private final VisitRepository visitRepository;
 
     public PatientDto getPatient(String email) {
         return patientMapper.toDto(getPatientByEmail(email));
@@ -47,6 +49,8 @@ public class PatientService {
 
     public PatientDto deletePatient(String email) {
         Patient patient = getPatientByEmail(email);
+        visitRepository.findByPatientEmail(email).stream().forEach(visit -> visit.setPatient(null));
+        visitRepository.saveAll(visitRepository.findByPatientEmail(email));
         patientRepository.delete(patient);
         return patientMapper.toDto(patient);
     }

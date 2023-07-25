@@ -1,14 +1,14 @@
 package com.seriuszg.medical.model.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MessageDto {
 
-    private String message;
-    private String label;
-    private HttpStatus httpStatus;
+    private final String message;
+    private final String label;
+    private final HttpStatus httpStatus;
 }
