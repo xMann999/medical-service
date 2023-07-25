@@ -8,7 +8,9 @@ import com.seriuszg.medical.mapper.PatientMapper;
 import com.seriuszg.medical.model.dto.PatientEditDto;
 import com.seriuszg.medical.model.dto.PatientDto;
 import com.seriuszg.medical.model.entity.Patient;
+import com.seriuszg.medical.model.entity.Visit;
 import com.seriuszg.medical.repositories.PatientRepository;
+import com.seriuszg.medical.repositories.VisitRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,6 +36,8 @@ public class PatientServiceTest {
     PatientRepository patientRepository;
     @Mock
     PatientMapper patientMapper;
+    @Mock
+    VisitRepository visitRepository;
 
     @Test
     void getPatient_PatientFound_PatientReturned() {
@@ -122,6 +126,8 @@ public class PatientServiceTest {
         PatientDto patient1DTO = createPatientDTO("sdsd", 1L);
         when(patientMapper.toDto(eq(patient1))).thenReturn(patient1DTO);
         when(patientRepository.findByEmail(eq("sdsd"))).thenReturn(Optional.of(patient1));
+        when(visitRepository.findByPatientEmail(eq("sdsd"))).thenReturn(List.of(new Visit()));
+        when(visitRepository.saveAll(any())).thenReturn(List.of(new Visit()));
 
         var result = patientService.deletePatient("sdsd");
 

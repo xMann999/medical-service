@@ -1,17 +1,17 @@
 package com.seriuszg.medical.model.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class DoctorRegistrationDto {
 
-    private String email;
-    private String password;
-    private String firstName;
-    private String lastName;
-    private Specialisation specialisation;
+    private final String email;
+    private final String password;
+    private final String firstName;
+    private final String lastName;
+    private final Specialisation specialisation;
 
     public boolean isCorrect() {
         return this.email != null &&

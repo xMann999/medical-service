@@ -1,17 +1,17 @@
 package com.seriuszg.medical.model.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Data
 public class FacilityRegistrationDto {
 
-    private String name;
-    private String city;
-    private String postalCode;
-    private String street;
-    private String streetNo;
+    private final String name;
+    private final String city;
+    private final String postalCode;
+    private final String street;
+    private final String streetNo;
 
     public boolean isCorrect() {
         return this.name != null &&

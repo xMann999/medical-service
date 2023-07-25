@@ -1,17 +1,16 @@
 package com.seriuszg.medical.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class DoctorDto {
 
-    private Long id;
-    private String email;
-    private String firstName;
-    private String lastName;
-    private Specialisation specialisation;
-    private Long facilityId;
+    private final Long id;
+    private final String email;
+    private final String firstName;
+    private final String lastName;
+    private final Specialisation specialisation;
+    private final Long facilityId;
 }

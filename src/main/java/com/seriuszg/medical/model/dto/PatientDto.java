@@ -1,23 +1,20 @@
 package com.seriuszg.medical.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Builder
 public class PatientDto {
 
-    private Long id;
-    private String email;
-    private String password;
-    private String idCardNo;
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
-    private LocalDate birthday;
+    private final Long id;
+    private final String email;
+    private final String password;
+    private final String idCardNo;
+    private final String firstName;
+    private final String lastName;
+    private final String phoneNumber;
+    private final LocalDate birthday;
 }
