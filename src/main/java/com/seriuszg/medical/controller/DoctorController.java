@@ -40,7 +40,7 @@ public class DoctorController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = DoctorDto.class))}),
-            @ApiResponse(responseCode = "400", description = "Doctor not found", content = @Content)
+            @ApiResponse(responseCode = "404", description = "Doctor not found", content = @Content)
     })
     @GetMapping("/{id}")
     public DoctorDto getDoctor(@PathVariable Long id) {
@@ -61,7 +61,7 @@ public class DoctorController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = DoctorDto.class))}),
-            @ApiResponse(responseCode = "400", description = "Doctor not found", content = @Content)
+            @ApiResponse(responseCode = "404", description = "Doctor not found", content = @Content)
     })
     @DeleteMapping("/{id}")
     public DoctorDto deleteDoctor(@PathVariable Long id) {
