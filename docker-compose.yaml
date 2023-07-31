@@ -1,0 +1,18 @@
+version: '3.5'
+services:
+  aplikacja1:
+    image: medical-service
+    ports:
+      - "8080:8080"
+    networks:
+      - mynetwork
+  aplikacja2:
+    image: medical-clinic-details
+    ports:
+      - "8081:8081"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    external: true
